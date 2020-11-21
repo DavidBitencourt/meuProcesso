@@ -23,7 +23,7 @@ export function Header({ backPage }) {
 }
 
 Header.defaultProps = {
-  backPage: true,
+  backPage: false,
 };
 
 Header.propTypes = {
