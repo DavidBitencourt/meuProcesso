@@ -9,10 +9,18 @@ export const Container = styled.div`
   justify-content: flex-start;
 `;
 
+export const ContainerSearchStyled = styled.div`
+  width: 50%;
+  height: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const CountProcessTitleStyled = styled.h1`
     font-size: 22px;
     font-weight: bold;
-    margin: 25px 0;
+    margin: 0 0 25px 0;
     visibility: ${({loading, processesCount}) => loading || processesCount  < 1 ? "hidden" : "inherit"};
 `;
 
@@ -60,3 +68,18 @@ export const TableColumnStyled = styled.td`
   text-align: center;
 `;
 
+export const EmptyBoxStyled = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  transition: visibility 1s, opacity 0.5s linear;
+`;
+
+export const TextEmptyStyled = styled.label`
+  font-size: 18px;
+  color: #707070;
+  margin-top: 20px
+`;

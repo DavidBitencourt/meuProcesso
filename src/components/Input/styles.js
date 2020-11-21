@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 export const BoxInputStyled = styled.div`
   width: ${({ width }) => width}%;
-  height: 45px;
-  margin: 35px 0; 
+  height: 50px;
+  margin: 0; 
 `;
 
 export const CssTextField = withStyles({
@@ -15,13 +15,13 @@ export const CssTextField = withStyles({
     backgroundColor: "#FFFFFF",
     borderRadius: `6px`,
     fontWeight: "bold",
-    fontSize: "2vh",
+    fontSize: "16px",
     border: `1px solid #828282`,
     paddingLeft: "2vh",
     boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.3)",
 
     "& label + .MuiInput-formControl": {
-      marginTop: "5px",
+      marginTop: "10px",
     },
     "& .MuiInputBase-input": {
       color: "#000000",
