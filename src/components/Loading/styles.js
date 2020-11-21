@@ -1,11 +1,12 @@
 import styled, { css } from "styled-components";
 
 export const LoadingBoxStyled = styled.div`
-  position: absolute;
+  /* position: absolute; */
   width: 100%;
   height: 100%;
   z-index: 99;
   display: flex;
+  flex-direction: column;
   align-items: center;
   background-color: #ffffff;
   transition: visibility 1s, opacity 0.5s linear;
@@ -17,4 +18,9 @@ export const LoadingBoxStyled = styled.div`
       opacity: 0;
       transition: visibility 1s, opacity 1s linear;
     `}
+`;
+
+export const TextStyled = styled.label`
+  font-size: 16px;
+  color: #707070;
 `;

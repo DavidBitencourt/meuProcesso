@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
+import 'date-fns';
+import { format } from "date-fns";
 import InputStyled from "../../components/Input";
 import HeaderStyled from "../../components/Header";
+import LoadingStyled from "../../components/Loading";
 import axios from "axios";
 import {
   Container,
+  CountProcessTitleStyled,
+  ContainerResultStyled,
   TableResultStyled,
   TableBodyStyled,
   TableHeaderStyled,
@@ -15,41 +20,33 @@ import {
 function Home() {
   const [searchProcess, setSearchProcess] = useState("");
   const [processes, setProcesses] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  const [processesCount, setProcessesCount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const searchProcessApi = async word => {
+    setLoading(true);
     const obj = {
       q: [word] 
     }
-    await axios.post("https://challenge.seuprocesso.com/api/search/", obj, 
-    {
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      }
-    }).then(response => {
+    await axios.post("https://challenge.seuprocesso.com/api/search/", obj).then(response => {
       setProcesses(response.data.processes);
+      setProcessesCount(response.data.processes.length)
     }).catch(error => {
       setProcesses([]);
     });
+    setLoading(false);
   }
 
   useEffect(() => {
-    searchProcess && searchProcessApi(searchProcess);
+    searchProcess ? searchProcessApi(searchProcess) : setProcesses([]);
   }, [searchProcess]);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2500);
-  // }, []);
-
+  
   return (
     <>
-      {/* {loading && <Loading show={loading} />} */}
       <HeaderStyled />
       <Container>
         <InputStyled 
-            width={45}
+            width={50}
             label="Buscar Processo"
             name="searchProcess"
             onChange={(value) => {
@@ -57,24 +54,29 @@ function Home() {
             }}
             value={searchProcess}
         />
-        <TableResultStyled>
-            <TableBodyStyled>
-              <TableRowStyled>
-                  <TableHeaderStyled>número do processo</TableHeaderStyled>
-                  <TableHeaderStyled>data do processo</TableHeaderStyled>
-                  <TableHeaderStyled>Tribunal</TableHeaderStyled>
-              </TableRowStyled>
-              {/* {data.map((item) => ( */}
-                <TableRowStyled className="row-table">
-                  <TableColumnStyled>00022287520138260362</TableColumnStyled>
-                  <TableColumnStyled>2019-06-26</TableColumnStyled>
-                  <TableColumnStyled>
-                    TJSP
-                  </TableColumnStyled>
+        <CountProcessTitleStyled loading={loading} processesCount={processesCount}>
+          {processesCount} processos encontrados
+        </CountProcessTitleStyled>
+        <ContainerResultStyled>
+          {loading ? <LoadingStyled show={loading} /> : (
+            <TableResultStyled>
+              <TableBodyStyled>
+                <TableRowStyled>
+                    <TableHeaderStyled>Número do processo</TableHeaderStyled>
+                    <TableHeaderStyled>Data (última publicação)</TableHeaderStyled>
+                    <TableHeaderStyled>Tribunal</TableHeaderStyled>
                 </TableRowStyled>
-              {/* ))} */}
-            </TableBodyStyled>
-          </TableResultStyled>
+                {processes.map((process) => (
+                  <TableRowStyled key={process.nup} onClick={() => alert("teste")}>
+                    <TableColumnStyled>{process.nup}</TableColumnStyled>
+                    <TableColumnStyled>{format(new Date(process.last_pub), 'dd/MM/yyyy')}</TableColumnStyled>
+                    <TableColumnStyled>{process.tribunal}</TableColumnStyled>
+                  </TableRowStyled>
+                ))}
+              </TableBodyStyled>
+            </TableResultStyled>
+          )} 
+        </ContainerResultStyled>
       </Container>
     </>
   );

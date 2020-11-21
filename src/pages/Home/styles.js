@@ -9,11 +9,24 @@ export const Container = styled.div`
   justify-content: flex-start;
 `;
 
-export const TableResultStyled = styled.table`
-  width: 45%;
+export const CountProcessTitleStyled = styled.h1`
+    font-size: 22px;
+    font-weight: bold;
+    margin: 25px 0;
+    visibility: ${({loading, processesCount}) => loading || processesCount  < 1 ? "hidden" : "inherit"};
+`;
+
+export const ContainerResultStyled = styled.div`
+  width: 50%;
   height: auto;
+`;
+
+export const TableResultStyled = styled.table`
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
   border-collapse: collapse;
+  margin-bottom: 100px;
 `;
 
 export const TableBodyStyled = styled.tbody`
@@ -22,25 +35,23 @@ export const TableBodyStyled = styled.tbody`
 `;
 
 export const TableHeaderStyled = styled.th`
+  font-size: 18px;
+  font-weight: bold;
   text-align: center;
   border-bottom: 2px solid #000;
-  font-weight: bold;
 `;
 
 export const TableRowStyled = styled.tr`
+  font-size: 16px;
+  height: 45px;
   text-align: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   :nth-of-type(n + 2) {
     :hover {
       transition: 0.3s;
-      background: linear-gradient(
-        135deg,
-        rgba(69, 40, 123, 1) 0%,
-        rgba(12, 12, 12, 1) 100%
-      );
+      background: linear-gradient(90deg,rgba(149,193,31,1) 0%,rgba(0,152,58,1) 100%);
       color: #ffffff;
       cursor: pointer;
-      font-weight: bold;
     }
   }
 `;

@@ -2,17 +2,18 @@ import PropTypes from "prop-types";
 import React from "react";
 import loading from "../../assets/animations/loading.json";
 import AnimationLottie from "../AnimationLottie";
-import { LoadingBoxStyled } from "./styles";
+import { LoadingBoxStyled, TextStyled } from "./styles";
 
 function Loading({ show }) {
   return (
     <LoadingBoxStyled show={show}>
       <AnimationLottie
-        height={100}
-        width={100}
+        height={120}
+        width={120}
         animationData={loading}
         borderRadius={100}
       />
+      <TextStyled>Procurando...</TextStyled>
     </LoadingBoxStyled>
   );
 }

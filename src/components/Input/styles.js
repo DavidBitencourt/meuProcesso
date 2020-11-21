@@ -24,7 +24,7 @@ export const CssTextField = withStyles({
       marginTop: "5px",
     },
     "& .MuiInputBase-input": {
-      color: "#4f4f4f",
+      color: "#000000",
     },
     "& .MuiOutlinedInput-input": {
       padding: "8.5px 14px",
@@ -57,12 +57,12 @@ export const CssTextField = withStyles({
       borderColor: "none",
     },
     "& label": {
-      color: "#4f4f4f",
+      color: "#707070",
       transform: "translate(14px, 15px) scale(1)",
     },
     "& label.MuiInputLabel-shrink": {
       transform: "translate(0px, -27px) scale(1)",
-      color: "#4f4f4f",
+      color: "#707070",
     },
     "& legend": {
       width: "0px !important",

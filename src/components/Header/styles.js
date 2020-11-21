@@ -21,7 +21,6 @@ export const HeaderStyled = styled.header`
     justify-content: space-between;
     font-size: 14px;
     visibility: ${({ backPage }) => !backPage && "hidden"};
-    background: rgb(149,193,31);
     background: linear-gradient(90deg, rgba(149,193,31,1) 0%, rgba(0,152,58,1) 100%);
   }
 `;
