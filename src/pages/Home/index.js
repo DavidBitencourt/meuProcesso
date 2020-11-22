@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import HeaderStyled from "../../components/Header";
 import AnimationLottie from "../../components/AnimationLottie";
@@ -21,7 +21,7 @@ function Home() {
         <AnimationBoxStyled>
           <AnimationLottie
             height={150}
-            width={250}
+            width={220}
             animationData={courtAnimation}
             borderRadius={100}
           />

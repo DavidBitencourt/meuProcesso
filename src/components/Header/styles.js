@@ -8,6 +8,9 @@ export const HeaderStyled = styled.header`
   align-self: center;
   justify-content: space-between;
   background: #707070;
+  @media only screen and (max-width: 800px) {
+    padding: 0 15px;
+  }
   a {
     width: 90px;
     height: 50%;
@@ -37,5 +40,8 @@ export const TextStyled = styled.h1`
   font-size: 32px;
   color: #95C11F;
   margin-left: 20px;
+  @media only screen and (max-width: 800px) {
+    font-size: 28px;
+  }
 `;
 

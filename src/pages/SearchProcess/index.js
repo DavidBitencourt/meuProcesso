@@ -5,6 +5,7 @@ import InputStyled from "../../components/Input";
 import InputSelectStyled from "../../components/InputSelect";
 import HeaderStyled from "../../components/Header";
 import LoadingStyled from "../../components/Loading";
+import ModalStyled from "../../components/Modal";
 import AnimationLottie from "../../components/AnimationLottie";
 import emptyAnimation from "../../assets/animations/empty.json";
 import errorAnimation from "../../assets/animations/error.json";
@@ -22,7 +23,6 @@ import {
   TableColumnStyled,
   EmptyBoxStyled,
   TextEmptyStyled
-
 } from "./styles";
 
 function Home() {
@@ -33,6 +33,8 @@ function Home() {
   const [processesCount, setProcessesCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [visibilityModal, setVisibilityModal] = useState(false);
+  const [lastSnippets, setLastSnippets] = useState([]);
 
   const searchProcessApi = async (processWord, tribunal) => {
     if(!processWord) {
@@ -69,67 +71,90 @@ function Home() {
     searchProcessApi(searchProcess, tribunals);
   }, [searchProcess, tribunals]);
 
+  const getLatestPublications = async process => {
+    setVisibilityModal(true);
+
+    const obj = {
+      q: [process.nup],
+      snippets: 5
+    }
+
+    await axios.post("https://challenge.seuprocesso.com/api/search/", obj).then(response => {
+      setLastSnippets(response.data.processes[0].last_snippets);
+    }).catch(error => {
+      setVisibilityModal(false);
+    });
+  }
+
   return (
     <>
       <HeaderStyled backPage/>
-      <Container>
-      <ContainerSearchStyled>
-          <InputStyled 
-              width={58}
-              label="Buscar Processo"
-              name="searchProcess"
-              onChange={(value) => {
-                setSearchProcess(value.searchProcess);
+      {visibilityModal && (
+        <ModalStyled 
+          visibility={visibilityModal}
+          modalHandler={setVisibilityModal}
+          lastSnippets={lastSnippets}
+          resetLastSnippets={setLastSnippets}
+        />
+      )}
+      <Container visibilityModal={visibilityModal}>
+        <ContainerSearchStyled>
+            <InputStyled 
+                width={58}
+                label="Buscar Processo"
+                name="searchProcess"
+                onChange={(value) => {
+                  setSearchProcess(value.searchProcess);
+                }}
+                value={searchProcess}
+            />
+            <InputSelectStyled
+              width={40}
+              label="Filtrar por tribunal"
+              name="tribunals"
+              values={dataTribunals}
+              valueChange={(value) => {
+                setTribunals(value.tribunals);
               }}
-              value={searchProcess}
-          />
-          <InputSelectStyled
-            width={40}
-            label="Filtrar por tribunal"
-            name="tribunals"
-            values={dataTribunals}
-            valueChange={(value) => {
-              setTribunals(value.tribunals);
-            }}
-            changeValue={tribunals}
-          />
-        </ContainerSearchStyled>
-        <CountProcessTitleStyled loading={loading} processesCount={processesCount}>
-          {processesCount > 1 ? processesCount + " processos encontrados" : processesCount + " processo encontrado"} 
-        </CountProcessTitleStyled>
-        <ContainerResultStyled>
-          {loading ? <LoadingStyled show={loading} /> : (
-            processes.length > 0 ? (
-              <TableResultStyled>
-              <TableBodyStyled>
-                <TableRowStyled>
-                    <TableHeaderStyled>Número do processo</TableHeaderStyled>
-                    <TableHeaderStyled>Data (última publicação)</TableHeaderStyled>
-                    <TableHeaderStyled>Tribunal</TableHeaderStyled>
-                </TableRowStyled>
-                {processes.map((process) => (
-                  <TableRowStyled key={process.nup} onClick={() => alert("teste")}>
-                    <TableColumnStyled>{process.nup}</TableColumnStyled>
-                    <TableColumnStyled>{format(new Date(process.last_pub), 'dd/MM/yyyy')}</TableColumnStyled>
-                    <TableColumnStyled>{process.tribunal}</TableColumnStyled>
+              changeValue={tribunals}
+            />
+          </ContainerSearchStyled>
+          <CountProcessTitleStyled loading={loading} processesCount={processesCount}>
+            {processesCount > 1 ? processesCount + " processos encontrados" : processesCount + " processo encontrado"} 
+          </CountProcessTitleStyled>
+          <ContainerResultStyled>
+            {loading ? <LoadingStyled show={loading} label="Procurando..." /> : (
+              processes.length > 0 ? (
+                <TableResultStyled>
+                <TableBodyStyled>
+                  <TableRowStyled>
+                      <TableHeaderStyled>Número do processo</TableHeaderStyled>
+                      <TableHeaderStyled>Data (última publicação)</TableHeaderStyled>
+                      <TableHeaderStyled>Tribunal</TableHeaderStyled>
                   </TableRowStyled>
-                ))}
-              </TableBodyStyled>
-            </TableResultStyled>
-            ) : (
-              <EmptyBoxStyled>
-                <AnimationLottie
-                  height={error ? 80 : 120}
-                  width={error ? 80 : 120}
-                  animationData={error ? errorAnimation : emptyAnimation}
-                  borderRadius={100}
-                />
-                <TextEmptyStyled>{searchMessage}</TextEmptyStyled>
-              </EmptyBoxStyled>
-            )
-          )} 
-        </ContainerResultStyled>
-      </Container>
+                  {processes.map((process) => (
+                    <TableRowStyled key={process.nup} onClick={() => getLatestPublications(process)}>
+                      <TableColumnStyled>{process.nup}</TableColumnStyled>
+                      <TableColumnStyled>{format(new Date(process.last_pub), 'dd/MM/yyyy')}</TableColumnStyled>
+                      <TableColumnStyled>{process.tribunal}</TableColumnStyled>
+                    </TableRowStyled>
+                  ))}
+                </TableBodyStyled>
+              </TableResultStyled>
+              ) : (
+                <EmptyBoxStyled>
+                  <AnimationLottie
+                    height={error ? 80 : 120}
+                    width={error ? 80 : 120}
+                    animationData={error ? errorAnimation : emptyAnimation}
+                    borderRadius={100}
+                  />
+                  <TextEmptyStyled>{searchMessage}</TextEmptyStyled>
+                </EmptyBoxStyled>
+              )
+            )} 
+          </ContainerResultStyled>
+        </Container>
     </>
   );
 }

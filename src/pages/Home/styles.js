@@ -26,10 +26,14 @@ export const Container = styled.div`
 
 export const TitleStyled = styled.label`
   font-size: 26px;
+  font-weight: bold;
   color: #95C11F;
   margin-top: 40px;
   text-align: center;
   line-height: 39px;
+  @media only screen and (max-width: 800px) {
+    font-size: 20px;
+  }
 `;
 
 export const AnimationBoxStyled = styled.div`

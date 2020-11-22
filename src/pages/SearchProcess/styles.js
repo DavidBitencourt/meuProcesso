@@ -7,6 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  position: ${({ visibilityModal }) => visibilityModal ? "fixed" : "inherit"};;
 `;
 
 export const ContainerSearchStyled = styled.div`
@@ -15,6 +16,11 @@ export const ContainerSearchStyled = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media only screen and (max-width: 800px) {
+    width: 100%;
+    flex-direction: column;
+    margin-top: 50px;
+  }
 `;
 
 export const CountProcessTitleStyled = styled.h1`
@@ -22,11 +28,18 @@ export const CountProcessTitleStyled = styled.h1`
     font-weight: bold;
     margin: 0 0 25px 0;
     visibility: ${({loading, processesCount}) => loading || processesCount  < 1 ? "hidden" : "inherit"};
+    @media only screen and (max-width: 800px) {
+      font-size: 20px;
+      margin: 50px 0 25px 0;
+    }
 `;
 
 export const ContainerResultStyled = styled.div`
   width: 50%;
   height: auto;
+  @media only screen and (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 export const TableResultStyled = styled.table`
@@ -43,15 +56,15 @@ export const TableBodyStyled = styled.tbody`
 `;
 
 export const TableHeaderStyled = styled.th`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   border-bottom: 2px solid #000;
 `;
 
 export const TableRowStyled = styled.tr`
-  font-size: 16px;
-  height: 45px;
+  font-size: 14px;
+  height: 40px;
   text-align: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   :nth-of-type(n + 2) {

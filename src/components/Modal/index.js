@@ -1,72 +1,66 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import 'date-fns';
+import { format } from "date-fns";
 import { MdClose } from "react-icons/md";
+import LoadingStyled from "../Loading";
 import {
   CardBoxStyled,
   ContainerStyled,
   Header,
-  InfoTextStyled,
+  Title,
   ModalContent,
   OverflowStyled,
-  TableBodyStyled,
-  TableColumnStyled,
-  TableHeaderStyled,
-  TableRowStyled,
-  TableStyled,
-  Title
+  PublicationContainerStyled,
+  PublicationItemStyled,
+  PublicationHeaderStyled,
+  PublicationHeaderTextStyled,
+  PublicationTextStyled
 } from "./styles";
 
-function Modal({ visibility, modalHandler, data, labelHeader }) {
+function Modal({ visibility, modalHandler, lastSnippets, resetLastSnippets }) {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if(lastSnippets.length > 0) setLoading(false);
+  }, [lastSnippets]);
+
   return (
-    <ContainerStyled visibility={visibility.toString()}>
+    <ContainerStyled visibility={visibility}>
       <OverflowStyled
         onClick={() => {
           modalHandler(false);
+          resetLastSnippets([]);
         }}
       />
       <CardBoxStyled>
         <Header>
-          <Title>tabela de tarifas</Title>
+          <Title>últimas publicações</Title>
           <MdClose
-            onClick={() => modalHandler(false)}
-            style={{ fontSize: 25, color: "#4f4f4f", cursor: "pointer" }}
+            onClick={() => { modalHandler(false); resetLastSnippets([]); }}
+            style={{ fontSize: 25, color: "#707070", cursor: "pointer" }}
           />
         </Header>
         <ModalContent>
-          <TableStyled>
-            <TableBodyStyled>
-              <TableRowStyled>
-                {labelHeader.map((label, index) => (
-                  <TableHeaderStyled key={index}>{label}</TableHeaderStyled>
-                ))}
-              </TableRowStyled>
-              {data.map((item) => (
-                <TableRowStyled key={item.id} className="row-table">
-                  <TableColumnStyled>{item.origin}</TableColumnStyled>
-                  <TableColumnStyled>{item.destination}</TableColumnStyled>
-                  <TableColumnStyled>
-                    {item.minute.toLocaleString("pt-br", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-                  </TableColumnStyled>
-                  <TableColumnStyled>
-                    {((item.minute * 10) / 100 + item.minute).toLocaleString(
-                      "pt-br",
-                      {
-                        style: "currency",
-                        currency: "BRL",
-                      }
-                    )}
-                  </TableColumnStyled>
-                </TableRowStyled>
-              ))}
-            </TableBodyStyled>
-          </TableStyled>
-          <InfoTextStyled>
-            *** Ao exceder o limite de qualquer plano faleMais será cobrado o
-            valor da tarifa padrão mais uma taxa de 10% por minuto.
-          </InfoTextStyled>
+          <PublicationContainerStyled loading={loading}>
+            {loading ? <LoadingStyled show={loading} label="Carregando..." center /> : (
+              lastSnippets.map((process, index) => (
+                  <PublicationItemStyled key={index}>
+                    <PublicationHeaderStyled>
+                      <PublicationHeaderTextStyled>
+                        data de publicação: {format(new Date(process.data_publicacao), 'dd/MM/yyyy')}
+                      </PublicationHeaderTextStyled>
+                      <PublicationHeaderTextStyled>
+                        código diário: {process.codigo_diario}
+                      </PublicationHeaderTextStyled>
+                    </PublicationHeaderStyled>
+                    <PublicationTextStyled>
+                      {process.recorte}
+                    </PublicationTextStyled>
+                </PublicationItemStyled>
+                ))
+              )}
+            </PublicationContainerStyled>
         </ModalContent>
       </CardBoxStyled>
     </ContainerStyled>

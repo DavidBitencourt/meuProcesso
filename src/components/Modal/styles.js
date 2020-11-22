@@ -6,7 +6,7 @@ const bounceAnimation = keyframes`${bounceInDown}`;
 export const ContainerStyled = styled.div`
   width: 100%;
   height: 100%;
-  display: ${({ visibility }) => (visibility === "true" ? "flex" : "none")};
+  display: ${({ visibility }) => visibility ? "flex" : "none"};
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -17,12 +17,16 @@ export const ContainerStyled = styled.div`
 
 export const CardBoxStyled = styled.div`
   animation: 1s ${bounceAnimation};
-  border-radius: 3%;
+  border-radius: 15px;
   width: 90%;
-  max-width: 600px;
-  height: 70%;
+  max-width: 800px;
+  height: 90%;
   z-index: 2;
   background: #ffffff;
+  @media only screen and (max-width: 800px) {
+    width: 95%;
+    height: 80%;
+  }
 `;
 
 export const Header = styled.div`
@@ -30,16 +34,18 @@ export const Header = styled.div`
   flex-direction: row;
   justify-content: space-between;
   height: 5%;
-  padding: 5%;
-  margin: 1%;
+  margin: 20px;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h2`
   width: 100%;
   color: black;
-  font-size: 2.5vw;
+  font-size: 26px;
   text-align: center;
   color: #4f4f4f;
+  @media only screen and (max-width: 800px) {
+      font-size: 24px;
+  }
 `;
 
 export const ButtonCloseStyled = styled.img`
@@ -58,56 +64,46 @@ export const OverflowStyled = styled.div`
 
 export const ModalContent = styled.div`
   width: 100%;
-  height: 90%;
+  height: 85%;
+  padding: 0px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-`;
-
-export const TableStyled = styled.table`
-  width: 85%;
-  height: 70%;
-  border-radius: 10px;
-  border-collapse: collapse;
-`;
-
-export const TableBodyStyled = styled.tbody`
-  width: 100%;
-  height: 100%;
-`;
-
-export const TableHeaderStyled = styled.th`
-  text-align: center;
-  border-bottom: 2px solid #000;
-  font-weight: bold;
-`;
-
-export const TableRowStyled = styled.tr`
-  text-align: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  :nth-of-type(n + 2) {
-    :hover {
-      transition: 0.3s;
-      background: linear-gradient(
-        135deg,
-        rgba(69, 40, 123, 1) 0%,
-        rgba(12, 12, 12, 1) 100%
-      );
-      color: #ffffff;
-      cursor: pointer;
-      font-weight: bold;
-    }
+  @media only screen and (max-width: 800px) {
+    padding: 0px;
   }
 `;
 
-export const TableColumnStyled = styled.td`
-  text-align: center;
+export const PublicationContainerStyled = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 0px 20px;
+  overflow-y: ${({ loading }) => loading ? "inherit" : "scroll"};
 `;
 
-export const InfoTextStyled = styled.label`
-  width: 85%;
-  margin-top: 20px;
-  font-size: 15px;
-  color: #4f4f4f;
+export const PublicationItemStyled = styled.div`
+  width: 100%;
+  margin-top: 25px;
 `;
+
+export const PublicationHeaderStyled = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const PublicationHeaderTextStyled = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+  @media only screen and (max-width: 800px) {
+    font-size: 14px;
+  }
+`;
+
+export const PublicationTextStyled = styled.div`
+  font-size: 14px;
+  margin-top: 20px;
+  line-height: 23px;
+`;
+
