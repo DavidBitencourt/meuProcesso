@@ -39,6 +39,7 @@ function Home() {
   const searchProcessApi = async (processWord, tribunal) => {
     if(!processWord) {
       setSearchMessage("Nenhum resultado.");
+      setError(false);
       setProcessesCount(0);
       setProcesses([]);
       return false;
