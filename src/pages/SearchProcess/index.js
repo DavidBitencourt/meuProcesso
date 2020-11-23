@@ -119,7 +119,7 @@ function Home() {
               changeValue={tribunals}
             />
           </ContainerSearchStyled>
-          <CountProcessTitleStyled loading={loading} processesCount={processesCount}>
+          <CountProcessTitleStyled loading={loading.toString()} processesCount={processesCount}>
             {processesCount > 1 ? processesCount + " processos encontrados" : processesCount + " processo encontrado"} 
           </CountProcessTitleStyled>
           <ContainerResultStyled>

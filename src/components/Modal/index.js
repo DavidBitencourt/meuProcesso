@@ -12,6 +12,8 @@ import {
   ModalContent,
   OverflowStyled,
   PublicationContainerStyled,
+  BoxPublicationNumberStyled,
+  PublicationNumberStyled,
   PublicationItemStyled,
   PublicationHeaderStyled,
   PublicationHeaderTextStyled,
@@ -26,7 +28,7 @@ function Modal({ visibility, modalHandler, lastSnippets, resetLastSnippets }) {
   }, [lastSnippets]);
 
   return (
-    <ContainerStyled visibility={visibility}>
+    <ContainerStyled visibility={visibility.toString()}>
       <OverflowStyled
         onClick={() => {
           modalHandler(false);
@@ -35,7 +37,7 @@ function Modal({ visibility, modalHandler, lastSnippets, resetLastSnippets }) {
       />
       <CardBoxStyled>
         <Header>
-          <Title>últimas publicações</Title>
+          <Title>Últimas Publicações</Title>
           <MdClose
             onClick={() => { modalHandler(false); resetLastSnippets([]); }}
             style={{ fontSize: 25, color: "#707070", cursor: "pointer" }}
@@ -44,21 +46,31 @@ function Modal({ visibility, modalHandler, lastSnippets, resetLastSnippets }) {
         <ModalContent>
           <PublicationContainerStyled loading={loading}>
             {loading ? <LoadingStyled show={loading} label="Carregando..." center /> : (
-              lastSnippets.map((process, index) => (
-                  <PublicationItemStyled key={index}>
-                    <PublicationHeaderStyled>
-                      <PublicationHeaderTextStyled>
-                        data de publicação: {format(new Date(process.data_publicacao), 'dd/MM/yyyy')}
-                      </PublicationHeaderTextStyled>
-                      <PublicationHeaderTextStyled>
-                        código diário: {process.codigo_diario}
-                      </PublicationHeaderTextStyled>
-                    </PublicationHeaderStyled>
-                    <PublicationTextStyled>
-                      {process.recorte}
-                    </PublicationTextStyled>
-                </PublicationItemStyled>
-                ))
+              <>
+                <BoxPublicationNumberStyled>
+                  <PublicationNumberStyled>
+                    Número do processo:
+                  </PublicationNumberStyled>
+                  <PublicationNumberStyled>
+                    {lastSnippets[0].numeracao_unica}
+                  </PublicationNumberStyled>
+                </BoxPublicationNumberStyled>
+                {lastSnippets.map((process, index) => (
+                    <PublicationItemStyled key={index}>
+                      <PublicationHeaderStyled>
+                        <PublicationHeaderTextStyled>
+                          data de publicação: {format(new Date(process.data_publicacao), 'dd/MM/yyyy')}
+                        </PublicationHeaderTextStyled>
+                        <PublicationHeaderTextStyled>
+                          código diário: {process.codigo_diario}
+                        </PublicationHeaderTextStyled>
+                      </PublicationHeaderStyled>
+                      <PublicationTextStyled>
+                        {process.recorte}
+                      </PublicationTextStyled>
+                  </PublicationItemStyled>
+                  ))}
+                </>
               )}
             </PublicationContainerStyled>
         </ModalContent>

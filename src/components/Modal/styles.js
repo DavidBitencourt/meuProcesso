@@ -6,7 +6,7 @@ const bounceAnimation = keyframes`${bounceInDown}`;
 export const ContainerStyled = styled.div`
   width: 100%;
   height: 100%;
-  display: ${({ visibility }) => visibility ? "flex" : "none"};
+  display: ${({ visibility }) => visibility === "true" ? "flex" : "none"};
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -80,6 +80,15 @@ export const PublicationContainerStyled = styled.div`
   height: 100%;
   padding: 0px 20px;
   overflow-y: ${({ loading }) => loading ? "inherit" : "scroll"};
+`;
+
+export const BoxPublicationNumberStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const PublicationNumberStyled = styled.div`
+  font-size: 20px;
 `;
 
 export const PublicationItemStyled = styled.div`

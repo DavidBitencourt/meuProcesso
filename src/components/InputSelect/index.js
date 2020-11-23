@@ -15,9 +15,7 @@ function InputSelect({
   valueChange,
   label,
   changeValue,
-  width,
-  maxLength,
-  testid,
+  width
 }) {
   const [state, setState] = useState({
     value: values[0].label,
@@ -43,9 +41,6 @@ function InputSelect({
               valueChange({ [name]: e.target.value });
             }}
             key={name}
-            inputProps={{
-              "data-testid": testid,
-            }}
           >
             {values.map((select) => {
               return (
@@ -64,8 +59,7 @@ function InputSelect({
 InputSelect.defaultProps = {
   searchIcon: false,
   valueChange: () => {},
-  changeValue: null,
-  testid: "",
+  changeValue: null
 };
 
 InputSelect.propTypes = {
@@ -73,8 +67,7 @@ InputSelect.propTypes = {
   values: PropTypes.array.isRequired,
   valueChange: PropTypes.func,
   changeValue: PropTypes.string,
-  label: PropTypes.string,
-  testid: PropTypes.string,
+  label: PropTypes.string
 };
 
 export default InputSelect;

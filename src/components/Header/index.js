@@ -11,7 +11,7 @@ export function Header({ backPage }) {
       <ContainerLogoStyled>
         <AiOutlineFileSearch  size={55} color="#95C11F" />
         <TextStyled>
-          Meu processo
+          Meu Processo
         </TextStyled>
       </ContainerLogoStyled>
       <Link to="/">

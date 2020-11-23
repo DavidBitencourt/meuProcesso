@@ -27,7 +27,7 @@ export const CountProcessTitleStyled = styled.h1`
     font-size: 22px;
     font-weight: bold;
     margin: 0 0 25px 0;
-    visibility: ${({loading, processesCount}) => loading || processesCount  < 1 ? "hidden" : "inherit"};
+    visibility: ${({loading, processesCount}) => loading === "true" || processesCount  < 1 ? "hidden" : "inherit"};
     @media only screen and (max-width: 800px) {
       font-size: 20px;
       margin: 50px 0 25px 0;
