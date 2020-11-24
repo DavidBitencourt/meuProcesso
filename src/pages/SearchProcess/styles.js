@@ -17,9 +17,34 @@ export const ContainerSearchStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   @media only screen and (max-width: 800px) {
+    height: 240px;
     width: 100%;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 25px;
+  }
+`;
+
+export const ButtonSearchStyled = styled.button`
+  width: 20%;
+  height: 50px;
+  font-size: 14px;
+  font-weight: bold;
+  background: linear-gradient(90deg,rgba(149,193,31,1) 0%,rgba(0,152,58,1) 100%);
+  color: #FFFFFF;
+  border-radius: 25px;
+  margin-top: 25px;
+  border: none;
+  opacity: ${({disabled}) => disabled ? 0.5 : 1};
+
+  @media only screen and (max-width: 800px) {
+    margin-top: 0;
+  }
+
+  :focus {
+    outline: none;
+  }
+  :hover {
+    cursor: pointer;
   }
 `;
 

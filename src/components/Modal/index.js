@@ -49,10 +49,7 @@ function Modal({ visibility, modalHandler, lastSnippets, resetLastSnippets }) {
               <>
                 <BoxPublicationNumberStyled>
                   <PublicationNumberStyled>
-                    Número do processo:
-                  </PublicationNumberStyled>
-                  <PublicationNumberStyled>
-                    {lastSnippets[0].numeracao_unica}
+                    Processo: {lastSnippets[0].numeracao_unica}
                   </PublicationNumberStyled>
                 </BoxPublicationNumberStyled>
                 {lastSnippets.map((process, index) => (

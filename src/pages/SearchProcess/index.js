@@ -14,6 +14,7 @@ import dataTribunals from "../../utils/data.json";
 import {
   Container,
   ContainerSearchStyled,
+  ButtonSearchStyled,
   CountProcessTitleStyled,
   ContainerResultStyled,
   TableResultStyled,
@@ -35,9 +36,10 @@ function Home() {
   const [error, setError] = useState(false);
   const [visibilityModal, setVisibilityModal] = useState(false);
   const [lastSnippets, setLastSnippets] = useState([]);
+  const [disabled, setDisabled] = useState(true);
 
-  const searchProcessApi = async (processWord, tribunal) => {
-    if(!processWord) {
+  const searchProcessApi = async tribunal => {
+    if(!searchProcess) {
       setSearchMessage("Nenhum resultado.");
       setError(false);
       setProcessesCount(0);
@@ -48,7 +50,7 @@ function Home() {
     setLoading(true);
 
     const obj = {
-      q: [processWord],
+      q: [searchProcess],
       tribunals: [tribunal]
     }
 
@@ -69,9 +71,13 @@ function Home() {
   }
 
   useEffect(() => {
-    searchProcessApi(searchProcess, tribunals);
-  }, [searchProcess, tribunals]);
+    searchProcess ? setDisabled(false) : setDisabled(true);
+  }, [searchProcess]);
 
+  useEffect(() => {
+    searchProcessApi(tribunals);
+  }, [tribunals]);
+  
   const getLatestPublications = async process => {
     setVisibilityModal(true);
 
@@ -101,8 +107,8 @@ function Home() {
       <Container visibilityModal={visibilityModal}>
         <ContainerSearchStyled>
             <InputStyled 
-                width={58}
-                label="Buscar Processo"
+                width={50}
+                label="Digite um termo ou número do processo"
                 name="searchProcess"
                 onChange={(value) => {
                   setSearchProcess(value.searchProcess);
@@ -110,7 +116,7 @@ function Home() {
                 value={searchProcess}
             />
             <InputSelectStyled
-              width={40}
+              width={25}
               label="Filtrar por tribunal"
               name="tribunals"
               values={dataTribunals}
@@ -119,6 +125,12 @@ function Home() {
               }}
               changeValue={tribunals}
             />
+            <ButtonSearchStyled 
+              disabled={disabled}
+              onClick={() => searchProcessApi(tribunals)}
+            >
+              Procurar
+            </ButtonSearchStyled>
           </ContainerSearchStyled>
           <CountProcessTitleStyled loading={loading.toString()} processesCount={processesCount}>
             {processesCount > 1 ? processesCount + " processos encontrados" : processesCount + " processo encontrado"} 
