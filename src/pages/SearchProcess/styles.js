@@ -35,7 +35,7 @@ export const ButtonSearchStyled = styled.button`
   margin-top: 25px;
   border: none;
   opacity: ${({disabled}) => disabled ? 0.5 : 1};
-
+  
   @media only screen and (max-width: 800px) {
     margin-top: 0;
   }
@@ -44,7 +44,7 @@ export const ButtonSearchStyled = styled.button`
     outline: none;
   }
   :hover {
-    cursor: pointer;
+    cursor: ${({disabled}) => !disabled && "pointer"};;
   }
 `;
 

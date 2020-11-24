@@ -73,10 +73,6 @@ function Home() {
   useEffect(() => {
     searchProcess ? setDisabled(false) : setDisabled(true);
   }, [searchProcess]);
-
-  useEffect(() => {
-    searchProcessApi(tribunals);
-  }, [tribunals]);
   
   const getLatestPublications = async process => {
     setVisibilityModal(true);
@@ -122,6 +118,7 @@ function Home() {
               values={dataTribunals}
               valueChange={(value) => {
                 setTribunals(value.tribunals);
+                searchProcessApi(value.tribunals);
               }}
               changeValue={tribunals}
             />
